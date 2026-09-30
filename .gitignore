@@ -1,4 +1,8 @@
 .claude/
+.env
+.env.local
+.env.*.local
+.vercel/
 *.log
 Thumbs.db
 .DS_Store

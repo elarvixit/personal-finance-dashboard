@@ -8,6 +8,27 @@ $types = @{
   '.json'='application/json'; '.csv'='text/csv'; '.svg'='image/svg+xml'; '.png'='image/png'; '.ico'='image/x-icon'
 }
 
+# Mirrors the Vercel /api/config function: Supabase settings come from environment
+# variables, or from .env.local next to this script (re-read on every request).
+function Get-SupabaseConfig {
+  $vals = @{}
+  $envFile = Join-Path $root '.env.local'
+  if (Test-Path $envFile) {
+    foreach ($line in Get-Content $envFile) {
+      if ($line -match '^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$' -and -not $line.TrimStart().StartsWith('#')) {
+        $vals[$Matches[1]] = $Matches[2].Trim('"').Trim("'")
+      }
+    }
+  }
+  $pick = { param($names) foreach ($n in $names) {
+      $v = [Environment]::GetEnvironmentVariable($n); if ($v) { return $v }
+      if ($vals[$n]) { return $vals[$n] } }; return $null }
+  $url = & $pick @('SUPABASE_URL','NEXT_PUBLIC_SUPABASE_URL')
+  $key = & $pick @('SUPABASE_ANON_KEY','SUPABASE_PUBLISHABLE_KEY','NEXT_PUBLIC_SUPABASE_ANON_KEY','NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY')
+  if ($key -and $key.StartsWith('sb_secret_')) { $key = $null; Write-Host 'Ignoring SUPABASE_ANON_KEY: it is a secret key, use the anon/publishable key.' }
+  return (@{ supabaseUrl = $url; supabaseAnonKey = $key } | ConvertTo-Json -Compress)
+}
+
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$Port/")
 $listener.Prefixes.Add("http://127.0.0.1:$Port/")
@@ -25,7 +46,11 @@ try {
       if ([string]::IsNullOrEmpty($path)) { $path = 'index.html' }
       $file = [IO.Path]::GetFullPath((Join-Path $root $path))
 
-      if ($file.StartsWith($root) -and (Test-Path $file -PathType Leaf)) {
+      if ($path -eq 'api/config') {
+        $res.ContentType = 'application/json; charset=utf-8'
+        $res.Headers['Cache-Control'] = 'no-store'
+        $bytes = [Text.Encoding]::UTF8.GetBytes((Get-SupabaseConfig))
+      } elseif ($file.StartsWith($root) -and (Test-Path $file -PathType Leaf) -and -not ($path -split '[\\/]' | Where-Object { $_.StartsWith('.') })) {
         $bytes = [IO.File]::ReadAllBytes($file)
         $ext = [IO.Path]::GetExtension($file).ToLower()
         $res.ContentType = if ($types.ContainsKey($ext)) { $types[$ext] } else { 'application/octet-stream' }

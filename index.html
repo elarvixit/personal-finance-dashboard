@@ -53,6 +53,7 @@
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--font-body);-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit;color:inherit}
@@ -83,7 +84,7 @@ h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance;letter-spaci
 .privacy{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--ink-3);padding:0 4px}
 
 .main{min-width:0;display:flex;flex-direction:column}
-.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;gap:16px;padding:14px 32px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px)}
+.topbar{position:sticky;isolation:isolate;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;gap:16px;padding:14px 32px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px)}
 .topbar .m-brand{display:none}
 .stmt{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
 .stmt-icon{width:36px;height:36px;flex:none;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--ink-2)}
@@ -183,6 +184,11 @@ tbody tr:hover td{background:color-mix(in srgb,var(--surface-2) 70%,transparent)
 .formats .card{padding:16px}
 .formats h3{font-size:14px;margin-bottom:4px}
 .formats p{margin:0;font-size:13px;color:var(--ink-2)}
+.samples{margin-top:18px}
+.sample-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.sample-list li{display:flex;align-items:center;justify-content:space-between;gap:6px 16px;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line);font-size:13px}
+.sample-list a{display:inline-flex;align-items:center;gap:8px;color:var(--accent);text-decoration:none;font-weight:500;min-width:0;word-break:break-all}
+.sample-list a:hover span{text-decoration:underline}
 .file-chip{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .file-chip .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
 .map-status{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 16px}
@@ -285,6 +291,40 @@ th[aria-sort]{color:var(--ink)}
 .checkline{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink-2)}
 .checkline input{accent-color:var(--accent);margin-top:3px}
 
+/* ---------- account, auth, loading ---------- */
+.acct{position:relative;flex:none}
+.acct-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-2);background:var(--surface);padding:2px;display:grid;place-items:center}
+.avatar{width:100%;height:100%;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font:600 13px var(--font-display);text-transform:uppercase}
+.acct-pop{position:absolute;right:0;top:calc(100% + 8px);z-index:45;width:260px;max-width:calc(100vw - 32px);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:14px;display:flex;flex-direction:column;gap:12px}
+.acct-who{display:flex;flex-direction:column;gap:2px;min-width:0}
+.acct-who strong{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.busy{position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden}
+.busy b{position:absolute;top:0;bottom:0;width:30%;background:var(--accent);border-radius:2px;animation:busy 1.1s ease-in-out infinite}
+@keyframes busy{from{left:-30%}to{left:100%}}
+.save-state{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3)}
+.save-state .dot{width:6px;height:6px;background:var(--accent)}
+.modal{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:16px}
+.modal-backdrop{position:absolute;inset:0;background:color-mix(in srgb,var(--ink) 40%,transparent)}
+.modal-card{position:relative;width:100%;max-width:400px;display:flex;flex-direction:column;gap:14px;padding:24px;box-shadow:var(--shadow-lg)}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.modal-head h2{font-size:19px}
+.modal-head p{margin:4px 0 0;font-size:13px}
+.auth-ok{padding:12px 14px;border-radius:10px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);font-size:13px}
+.auth-switch{margin:0;font-size:13px;text-align:center}
+.linkish{border:0;background:none;padding:0;color:var(--accent);font-weight:600}
+.linkish:hover{text-decoration:underline}
+.no-data{max-width:520px;margin:40px auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:36px 24px}
+.no-data h2{font-size:19px}
+.no-data p{margin:0;max-width:44ch}
+.stmts{margin-top:18px}
+.stmt-list{list-style:none;margin:0;padding:0}
+.stmt-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.stmt-list .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.stmt-list .meta{font-size:12.5px;color:var(--ink-3)}
+.stmt-list .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.btn.danger{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 40%,transparent)}
+.toast.error svg{color:var(--danger)}
+
 /* ---------- toast ---------- */
 .toasts{position:fixed;right:24px;bottom:24px;z-index:80;display:flex;flex-direction:column;gap:10px;align-items:flex-end;pointer-events:none}
 .toast{pointer-events:auto;display:flex;align-items:center;gap:12px;max-width:min(440px,calc(100vw - 32px));padding:12px 14px 12px 16px;border-radius:12px;background:var(--ink);color:var(--surface);box-shadow:var(--shadow-lg);font-size:13.5px;animation:tin .22s ease-out}
@@ -354,7 +394,7 @@ th[aria-sort]{color:var(--ink)}
       </div>
       <div class="privacy">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <span>Files are parsed in your browser and never uploaded to a server.</span>
+        <span id="privacy-text">Files are parsed in your browser and never uploaded to a server.</span>
       </div>
     </div>
   </aside>
@@ -373,9 +413,24 @@ th[aria-sort]{color:var(--ink)}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
         New statement
       </a>
+      <div class="acct" id="acct" hidden>
+        <button type="button" class="btn sm primary" id="acct-signin">Sign in</button>
+        <button type="button" class="acct-btn" id="acct-btn" aria-haspopup="true" aria-expanded="false" hidden><span class="avatar" id="acct-avatar" aria-hidden="true">?</span><span class="sr">Account menu</span></button>
+        <div class="acct-pop" id="acct-pop" hidden>
+          <div class="acct-who"><span class="eyebrow">Signed in as</span><strong id="acct-email"></strong></div>
+          <button type="button" class="btn sm" id="acct-signout">Sign out</button>
+        </div>
+      </div>
+      <div class="busy" id="busy" hidden><b></b></div>
     </header>
 
     <main class="content">
+      <section class="card no-data" id="no-data" hidden>
+        <span class="drop-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg></span>
+        <h2>No statement yet</h2>
+        <p class="muted">Import a bank statement CSV and your dashboard, transactions and anomalies will appear here.</p>
+        <a class="btn primary" href="#upload" data-go="upload">Import a statement</a>
+      </section>
       <!-- UPLOAD -->
       <section class="view" id="view-upload" hidden>
         <div class="page-head">
@@ -520,11 +575,30 @@ th[aria-sort]{color:var(--ink)}
 </div>
 
 <nav class="bottomnav" id="bottom-nav" aria-label="Main navigation"></nav>
+<div class="modal" id="auth-modal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <form class="card modal-card" id="auth-form" role="dialog" aria-modal="true" aria-labelledby="auth-title" novalidate>
+    <div class="modal-head">
+      <div>
+        <h2 id="auth-title">Sign in</h2>
+        <p class="muted" id="auth-sub">Sign in to save statements, category edits and rules to your account.</p>
+      </div>
+      <button type="button" class="icon-btn" data-close aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <label class="field"><span>Email</span><input class="input" id="auth-email" type="email" autocomplete="email" required></label>
+    <label class="field"><span>Password</span><input class="input" id="auth-password" type="password" autocomplete="current-password" minlength="8" required></label>
+    <div class="err" id="auth-err" role="alert"></div>
+    <div class="auth-ok" id="auth-ok" role="status" hidden></div>
+    <button type="submit" class="btn primary" id="auth-submit">Sign in</button>
+    <p class="auth-switch muted"><span id="auth-switch-text">New here?</span> <button type="button" class="linkish" id="auth-switch">Create an account</button></p>
+  </form>
+</div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 <input type="file" id="file-input" accept=".csv,text/csv" hidden>
 <style>.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (function(){
 "use strict";
@@ -671,15 +745,21 @@ function sampleCsv(){
 }
 
 /* ============ state ============ */
-const now = new Date(2026,8,29);
+const BY = {system:'System', user:'You', table_edit:'You · table edit'};
+const SAMPLE_NAME = 'sample-statement-jan-sep-2026.csv';
+function demoRules(){
+  return [
+    ['SWIGGY','Food','system',new Date(2026,0,2)],['ZOMATO','Food','system',new Date(2026,0,2)],['UBER','Transport','system',new Date(2026,0,2)],
+    ['NETFLIX','Entertainment','system',new Date(2026,0,2)],['PAYROLL','Salary','system',new Date(2026,0,2)],['RENT','Rent','system',new Date(2026,0,2)],
+    ['AIRTEL','Bills','system',new Date(2026,0,2)],['APOLLO','Health','system',new Date(2026,0,2)],
+    ['BIGBASKET','Food','user',new Date(2026,1,11)],['TRF TO FD','Transfers','user',new Date(2026,2,4)],['CULTFIT','Health','user',new Date(2026,4,19)]
+  ].map(([pattern,category,by,created])=>({id:nid('r'),pattern,category,by,created}));
+}
 const S = {
-  tx: [], statement:{name:'sample-statement-jan-sep-2026.csv', sample:true},
-  rules: [
-    ['SWIGGY','Food','System',new Date(2026,0,2)],['ZOMATO','Food','System',new Date(2026,0,2)],['UBER','Transport','System',new Date(2026,0,2)],
-    ['NETFLIX','Entertainment','System',new Date(2026,0,2)],['PAYROLL','Salary','System',new Date(2026,0,2)],['RENT','Rent','System',new Date(2026,0,2)],
-    ['AIRTEL','Bills','System',new Date(2026,0,2)],['APOLLO','Health','System',new Date(2026,0,2)],
-    ['BIGBASKET','Food','You',new Date(2026,1,11)],['TRF TO FD','Transfers','You',new Date(2026,2,4)],['CULTFIT','Health','You',new Date(2026,4,19)]
-  ].map(([pattern,category,createdBy,created])=>({id:nid('r'),pattern,category,createdBy,created})),
+  // mode: 'demo' = sample data kept in memory; 'cloud' = signed in, everything saved to Supabase
+  mode: 'demo', backend: false, user: null, statements: [],
+  tx: [], statement:{id:null, name:SAMPLE_NAME, sample:true},
+  rules: demoRules(),
   dismissed: new Set(), anoms: [],
   range: {from:null,to:null},
   tf: {month:'all',cats:new Set(),min:'',max:'',sort:{key:'date',dir:'desc'},page:1},
@@ -687,9 +767,81 @@ const S = {
   view: 'dashboard'
 };
 const PAGE_SIZE = 12;
+const cloud = () => S.mode==='cloud';
+const newId = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() :
+  'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{ const r=Math.random()*16|0; return (c==='x'?r:(r&3|8)).toString(16); });
 
-function setTransactions(tx, statement){
-  S.tx = tx; S.statement = statement; S.dismissed = new Set();
+/* ============ Supabase data layer ============ */
+const T = {
+  statements:'vidhya_personal_finance_dashboard_statements',
+  transactions:'vidhya_personal_finance_dashboard_transactions',
+  rules:'vidhya_personal_finance_dashboard_category_rules',
+  reviews:'vidhya_personal_finance_dashboard_anomaly_reviews'
+};
+const RPC = { init:'vidhya_personal_finance_dashboard_init_user', importStatement:'vidhya_personal_finance_dashboard_import_statement' };
+let sb = null;
+const isoDate = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const fromIso = s => { const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); };
+const rowToRule = r => ({id:r.id, pattern:r.pattern, category:r.category, by:r.created_by, created:new Date(r.created_at)});
+const rowToTx = r => ({id:r.id, date:fromIso(r.txn_date), description:r.description, merchant:r.merchant, category:r.category, amount:Number(r.amount), type:r.txn_type, balance:r.balance==null?null:Number(r.balance)});
+const rowToStmt = r => ({id:r.id, name:r.file_name, rows:r.row_count, from:r.period_start?fromIso(r.period_start):null, to:r.period_end?fromIso(r.period_end):null, created:new Date(r.created_at)});
+
+function friendlyError(err){
+  const m = (err && (err.message||err.error_description||String(err))) || 'Unknown error';
+  if(/relation .* does not exist|Could not find the (table|function)|schema cache/i.test(m)) return 'The database tables are missing. Run supabase/schema.sql in the Supabase SQL Editor, then reload.';
+  if(/JWT|not signed in|28000/i.test(m)) return 'Your session has expired. Sign in again.';
+  if(/Failed to fetch|NetworkError|network/i.test(m)) return 'Could not reach Supabase. Check your internet connection.';
+  return m;
+}
+async function q(promise){ const {data,error}=await promise; if(error) throw error; return data; }
+// Runs a save; on failure puts the local state back and tells the user.
+async function persist(what, fn, revert){
+  if(!cloud()) return true;
+  busy(+1);
+  try{ await fn(); return true; }
+  catch(e){ if(revert) revert(); render(); toast(`Couldn't save ${what}. ${friendlyError(e)}`,null,'error'); return false; }
+  finally{ busy(-1); }
+}
+let busyCount=0;
+function busy(d){ busyCount=Math.max(0,busyCount+d); $('busy').hidden = busyCount===0; }
+
+const DB = {
+  async loadRules(){ return (await q(sb.from(T.rules).select('id,pattern,category,created_by,created_at').order('created_at',{ascending:false}))).map(rowToRule); },
+  async loadStatements(){ return (await q(sb.from(T.statements).select('id,file_name,row_count,period_start,period_end,created_at').order('created_at',{ascending:false}))).map(rowToStmt); },
+  async loadTransactions(statementId){
+    const out=[], size=1000;
+    for(let from=0;;from+=size){
+      const rows = await q(sb.from(T.transactions).select('id,txn_date,description,merchant,category,amount,txn_type,balance')
+        .eq('statement_id',statementId).order('txn_date',{ascending:true}).order('id',{ascending:true}).range(from,from+size-1));
+      out.push(...rows.map(rowToTx)); if(rows.length<size) break;
+    }
+    return out;
+  },
+  async loadReviews(){
+    const out=[], size=1000;
+    for(let from=0;;from+=size){
+      const rows = await q(sb.from(T.reviews).select('transaction_id').range(from,from+size-1));
+      out.push(...rows.map(r=>r.transaction_id)); if(rows.length<size) break;
+    }
+    return out;
+  },
+  importStatement(meta, tx){
+    return q(sb.rpc(RPC.importStatement,{
+      p_statement: meta,
+      p_transactions: tx.map(t=>({id:t.id, txn_date:isoDate(t.date), description:t.description, merchant:t.merchant, category:t.category, amount:t.amount, txn_type:t.type, balance:t.balance}))
+    }));
+  },
+  deleteStatement: id => q(sb.from(T.statements).delete().eq('id',id)),
+  setCategory: (ids, category) => q(sb.from(T.transactions).update({category}).in('id',ids)),
+  insertRule: r => q(sb.from(T.rules).insert({id:r.id, pattern:r.pattern, category:r.category, created_by:r.by})),
+  updateRule: r => q(sb.from(T.rules).update({category:r.category, created_by:r.by}).eq('id',r.id)),
+  deleteRule: id => q(sb.from(T.rules).delete().eq('id',id)),
+  dismiss: txId => q(sb.from(T.reviews).insert({transaction_id:txId})),
+  undismiss: txId => q(sb.from(T.reviews).delete().eq('transaction_id',txId))
+};
+
+function setTransactions(tx, statement, dismissed){
+  S.tx = tx; S.statement = statement; S.dismissed = new Set(dismissed||[]);
   const ms = monthsOf(S.tx); S.range = {from: ms[0]||null, to: ms[ms.length-1]||null};
   S.tf = {month:'all',cats:new Set(),min:'',max:'',sort:{key:'date',dir:'desc'},page:1};
   recomputeAnomalies();
@@ -727,34 +879,50 @@ function go(view){
   if(!NAV.some(n=>n[0]===view)) view='dashboard';
   S.view=view;
   document.querySelectorAll('.nav [data-go], .bottomnav [data-go]').forEach(a=>{ if(a.dataset.go===view) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
-  document.querySelectorAll('.view').forEach(v=>v.hidden = v.id!=='view-'+view);
-  try{ history.replaceState(null,'','#'+view); }catch(e){}
+  if(!authRedirect){ try{ history.replaceState(null,'','#'+view); }catch(e){} }
   render();
   window.scrollTo({top:0});
 }
+const DATA_VIEWS = ['dashboard','transactions','anomalies'];
 function render(){
+  const empty = !S.tx.length && DATA_VIEWS.includes(S.view);
+  document.querySelectorAll('.view').forEach(v=>v.hidden = empty || v.id!=='view-'+S.view);
+  $('no-data').hidden = !empty;
   renderShell();
+  if(empty) return;
   ({upload:renderUpload,dashboard:renderDashboard,transactions:renderTx,anomalies:renderAnoms,rules:renderRules})[S.view]();
 }
 function renderShell(){
   const n = S.tx.length;
-  let rangeTxt='No transactions yet';
+  let rangeTxt = cloud() ? 'Import a CSV to get started' : 'No transactions yet';
   if(n){ const ds=S.tx.map(t=>t.date); rangeTxt = fmtDate(new Date(Math.min(...ds)))+' – '+fmtDate(new Date(Math.max(...ds))); }
-  $('top-stmt-name').textContent = S.statement.name || 'No statement loaded';
-  $('top-stmt-range').innerHTML = esc(rangeTxt) + (S.statement.sample ? ' &nbsp;<span class="pill sample">Sample data</span>' : '');
+  $('top-stmt-name').textContent = S.statement.name || 'No statement yet';
+  const tag = S.statement.sample ? ' &nbsp;<span class="pill sample">Sample data</span>'
+    : (!cloud() && n) ? ' &nbsp;<span class="pill">Not saved</span>' : '';
+  $('top-stmt-range').innerHTML = esc(rangeTxt) + tag;
   $('side-stmt-name').textContent = S.statement.name || 'None';
-  $('side-stmt-count').textContent = n ? n.toLocaleString('en-IN')+' transactions' : 'Upload a CSV to begin';
+  $('side-stmt-count').textContent = n ? n.toLocaleString('en-IN')+' transactions' + (cloud()?' · saved':'') : 'Upload a CSV to begin';
   const c = flaggedIds().size;
   document.querySelectorAll('[data-badge]').forEach(b=>{ b.textContent=c; b.hidden=!c; });
+  // account
+  $('acct').hidden = !S.backend;
+  $('acct-signin').hidden = !!S.user;
+  $('acct-btn').hidden = !S.user;
+  if(S.user){ $('acct-email').textContent = S.user.email || 'Your account'; $('acct-avatar').textContent = (S.user.email||'?').trim().charAt(0); }
+  $('privacy-text').textContent = cloud()
+    ? 'Files are parsed in your browser. Transactions are saved to your private account; only you can see them.'
+    : S.backend ? 'Files are parsed in your browser. Sign in to save your statements; nothing is stored until you do.'
+    : 'Files are parsed in your browser and never uploaded to a server.';
 }
 
 /* ============ toast ============ */
-function toast(msg, action){
-  const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status');
-  el.innerHTML=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg><span style="flex:1">${esc(msg)}</span>`;
+function toast(msg, action, kind){
+  const el=document.createElement('div'); el.className='toast'+(kind==='error'?' error':''); el.setAttribute('role',kind==='error'?'alert':'status');
+  const icon = kind==='error' ? '<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.01"/>' : '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/>';
+  el.innerHTML=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg><span style="flex:1">${esc(msg)}</span>`;
   if(action){ const b=document.createElement('button'); b.type='button'; b.textContent=action.label; b.onclick=()=>{ action.run(); el.remove(); }; el.appendChild(b); }
   $('toasts').appendChild(el);
-  setTimeout(()=>el.remove(), action?6000:4200);
+  setTimeout(()=>el.remove(), kind==='error'?8000:action?6000:4200);
 }
 
 /* ============ CSV parsing ============ */
@@ -835,6 +1003,25 @@ function handleFile(file){
   rd.onerror=()=>{ S.up={stage:'idle',error:`We couldn't read ${file.name}. Try choosing it again.`}; renderUpload(); };
   rd.readAsText(file);
 }
+const SAMPLE_FILES = [
+  ['01-savings-apr-sep-2026.csv','Separate withdrawal and deposit columns',222],
+  ['02-signed-amount-jan-mar-2026.csv','Single signed amount column',110],
+  ['03-current-account-jul-sep-2026.csv','Debit and credit, "01 Jul 2026" dates',115],
+  ['04-custom-headers-may-jun-2026.csv','Unusual headers, map Balance by hand',74],
+  ['05-edge-cases-sep-2026.csv','Messy rows and a bad date',12]
+];
+function stmtListHtml(){
+  const list=S.statements;
+  return `<div class="card stmts">
+    <div class="card-head" style="margin-bottom:10px"><div><h2>Your statements</h2><div class="sub">${list.length ? `${list.length} saved to your account` : 'Statements you import are saved here'}</div></div></div>
+    ${list.length ? `<ul class="stmt-list">${list.map(s=>`<li>
+      <div style="min-width:0"><div class="nm">${esc(s.name)}${s.id===S.statement.id?' <span class="pill sample">Open</span>':''}</div>
+      <div class="meta">${s.from&&s.to?`${fmtDate(s.from)} – ${fmtDate(s.to)} · `:''}${s.rows.toLocaleString('en-IN')} transactions · imported ${fmtDate(s.created)}</div></div>
+      <div class="acts">${s.id!==S.statement.id?`<button type="button" class="btn sm" data-open-stmt="${s.id}">Open</button>`:''}
+        <button type="button" class="btn sm ghost danger" data-del-stmt="${s.id}" aria-label="Delete ${esc(s.name)}">Delete</button></div></li>`).join('')}</ul>`
+      : '<p class="muted" style="margin:0">No statements yet. Drop a CSV above to import your first one.</p>'}
+  </div>`;
+}
 const kb = n => n>1e6 ? (n/1e6).toFixed(1)+' MB' : Math.max(1,Math.round(n/1024))+' KB';
 
 function renderUpload(){
@@ -852,10 +1039,16 @@ function renderUpload(){
         </div>
         <span class="hint">.csv up to 10 MB</span>
       </div>
+      ${S.backend && !S.user ? `<div class="notice" style="margin-top:16px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><p style="flex:1">You're not signed in, so an import only lasts until you reload the page. Sign in to keep your statements, category edits and rules.</p><button type="button" class="btn sm" data-signin>Sign in</button></div>` : ''}
+      ${cloud() ? stmtListHtml() : ''}
       <div class="formats">
         <div class="card"><h3>Separate debit and credit</h3><p>Columns such as Withdrawal and Deposit are mapped to Debit and Credit.</p></div>
         <div class="card"><h3>Single signed amount</h3><p>One Amount column where negative values are money going out.</p></div>
         <div class="card"><h3>Dates in most formats</h3><p>29/09/2026, 2026-09-29 and 29 Sep 2026 are all read correctly.</p></div>
+      </div>
+      <div class="card samples">
+        <div class="card-head" style="margin-bottom:10px"><div><h2>Sample statements</h2><div class="sub">Download one, then drop it above to see how each format is mapped.</div></div></div>
+        <ul class="sample-list">${SAMPLE_FILES.map(([f,fmtName,rows])=>`<li><a href="sample-data/${f}" download="${f}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 20h14"/></svg><span class="mono">${f}</span></a><span class="muted">${fmtName} · ${rows} rows</span></li>`).join('')}</ul>
       </div>`;
     const drop=$('drop');
     ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
@@ -917,7 +1110,7 @@ function renderUpload(){
     el.innerHTML = `<div class="card progress-card success">
       <span class="drop-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
       <h2 style="font-size:19px">${u.count.toLocaleString('en-IN')} transactions imported</h2>
-      <p class="muted" style="margin:0">${u.skipped?`${u.skipped} rows were skipped because their date couldn't be read. `:''}${flaggedIds().size} payments were flagged for review.</p>
+      <p class="muted" style="margin:0">${u.skipped?`${u.skipped} ${u.skipped===1?'row was':'rows were'} skipped because the date couldn't be read. `:''}${(n=>n===0?'No payments were flagged for review.':`${n} ${n===1?'payment was':'payments were'} flagged for review.`)(flaggedIds().size)}</p>
       <div class="drop-actions" style="margin-top:6px"><button class="btn primary" data-go="dashboard">View dashboard</button><button class="btn" data-go="anomalies">Review anomalies</button></div>
       <button class="btn ghost sm" id="another">Import another statement</button>
     </div>`;
@@ -927,19 +1120,22 @@ function renderUpload(){
 function startImport(){
   const u=S.up;
   u.steps=[`Reading ${u.rows.length.toLocaleString('en-IN')} rows`,'Normalising dates and amounts',`Categorising with ${S.rules.length} rules`,'Checking for unusual payments'];
+  if(cloud()) u.steps.push('Saving to your account');
   u.stage='processing'; renderUpload();
   const total = reduceMotion()?600:2600, t0=performance.now();
   const lis=[...$('steps').children];
+  const animated = cloud() ? lis.length-1 : lis.length;   // the save step stays active until Supabase answers
+  const check='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   const tick=()=>{
-    const p=Math.min(1,(performance.now()-t0)/total), pc=Math.round(p*100);
+    const p=Math.min(1,(performance.now()-t0)/total), pc=Math.round(p*(cloud()?90:100));
     $('pfill').style.width=pc+'%'; $('pbar').setAttribute('aria-valuenow',pc); $('pct').textContent=pc+'%';
-    const idx=Math.min(lis.length-1,Math.floor(p*lis.length));
-    lis.forEach((li,i)=>{ li.className = i<idx||p===1 ? 'done' : i===idx ? 'active' : ''; if(li.className==='done') li.firstChild.innerHTML='<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'; });
+    const idx=p===1 ? animated : Math.min(animated-1,Math.floor(p*animated));
+    lis.forEach((li,i)=>{ li.className = i<idx ? 'done' : i===idx ? 'active' : ''; if(li.className==='done') li.firstChild.innerHTML=check; });
     if(p<1) setTimeout(tick,60); else setTimeout(finishImport,280);
   };
   tick();
 }
-function finishImport(){
+async function finishImport(){
   const u=S.up, col=f=>u.mapping.indexOf(f);
   const iD=col('date'), iS=col('description'), iDb=col('debit'), iCr=col('credit'), iA=col('amount'), iB=col('balance');
   const amountCol = iA>=0 ? u.rows.map(r=>parseAmount(r[iA])) : [];
@@ -952,14 +1148,28 @@ function finishImport(){
     if(iDb>=0||iCr>=0){ const db=Math.abs(parseAmount(r[iDb])), cr=Math.abs(parseAmount(r[iCr])); if(cr>0&&!(db>0)){amt=cr;type='credit';} else {amt=db;} }
     if(!amt && iA>=0){ const a=amountCol[ri]; amt=Math.abs(a); type = anyNeg ? (a<0?'debit':'credit') : (/salary|payroll|refund|credit|\bcr\b|interest/i.test(desc)?'credit':'debit'); }
     const merchant = extractMerchant(desc);
-    out.push({id:nid('t'),date:d,description:desc,merchant,amount:amt,type,category:categorize(desc,merchant,type),balance:iB>=0?parseAmount(r[iB]):null});
+    out.push({id:newId(),date:d,description:desc.slice(0,1000),merchant:merchant.slice(0,200),amount:Math.round(amt*100)/100,type,category:categorize(desc,merchant,type),balance:iB>=0?parseAmount(r[iB]):null});
   });
   if(!out.length){ S.up={stage:'idle',error:`None of the ${u.rows.length} rows had a date we could read in the "${u.headers[iD]}" column. Check the column mapping, or make sure dates look like 29/09/2026 or 2026-09-29.`}; renderUpload(); return; }
   out.sort((a,b)=>a.date-b.date);
-  setTransactions(out,{name:u.name,sample:false});
+  let statement = {id:null, name:u.name, sample:false};
+  if(cloud()){
+    const mapping = {}; u.headers.forEach((h,i)=>{ if(u.mapping[i]!=='ignore') mapping[u.mapping[i]]=h; });
+    busy(+1);
+    try{
+      const id = await DB.importStatement({file_name:u.name, skipped_rows:skipped, period_start:isoDate(out[0].date), period_end:isoDate(out[out.length-1].date), column_mapping:mapping}, out);
+      statement = {id, name:u.name, sample:false};
+      S.statements.unshift({id, name:u.name, rows:out.length, from:out[0].date, to:out[out.length-1].date, created:new Date()});
+    }catch(e){
+      S.up={...u, stage:'preview'}; renderUpload();
+      toast(`Couldn't save ${u.name}. ${friendlyError(e)} Nothing was imported; you can try again.`,null,'error');
+      return;
+    }finally{ busy(-1); }
+  }
+  setTransactions(out,statement);
   S.up={stage:'done',count:out.length,skipped};
   renderShell(); renderUpload();
-  toast(`Imported ${out.length.toLocaleString('en-IN')} transactions from ${u.name}`);
+  toast(`Imported ${out.length.toLocaleString('en-IN')} transactions from ${u.name}${cloud()?' and saved them to your account':''}`);
 }
 
 /* ============ DASHBOARD ============ */
@@ -1094,21 +1304,35 @@ function bindTx(){
     S.tf.page=1; renderTx(); const nb=$('tx-head').querySelector(`[data-sort="${k}"]`); nb&&nb.focus(); });
   $('tx-pages').addEventListener('click',e=>{ const b=e.target.closest('[data-page]'); if(!b||b.disabled) return; S.tf.page=+b.dataset.page; renderTx(); });
   $('tx-body').addEventListener('click',e=>{ if(e.target.closest('[data-clear]')) clearTxFilters(); });
-  $('tx-body').addEventListener('change',e=>{
+  $('tx-body').addEventListener('change',async e=>{
     const s=e.target.closest('select[data-id]'); if(!s) return;
     const t=S.tx.find(x=>x.id===s.dataset.id); if(!t) return;
-    const prev=t.category; t.category=s.value;
+    const prev=t.category, cat=s.value; t.category=cat;
     const pattern=t.merchant.toUpperCase();
     const existing=S.rules.find(r=>r.pattern.toUpperCase()===pattern);
     const prevRule = existing ? {...existing} : null;
-    if(existing){ existing.category=s.value; existing.createdBy='You · table edit'; existing.created=new Date(); }
-    else S.rules.unshift({id:nid('r'),pattern,category:s.value,createdBy:'You · table edit',created:new Date()});
+    let rule;
+    if(existing){ rule=existing; existing.category=cat; existing.by='table_edit'; }
+    else { rule={id:newId(),pattern,category:cat,by:'table_edit',created:new Date()}; S.rules.unshift(rule); }
     recomputeAnomalies(); renderShell();
-    s.closest('.cat-cell').querySelector('.dot').style.background=`var(${CAT_TOKEN(s.value)})`;
-    toast(`Category updated — will apply to future ${t.merchant} transactions.`,{label:'Undo',run:()=>{
+    s.closest('.cat-cell').querySelector('.dot').style.background=`var(${CAT_TOKEN(cat)})`;
+    const restore = () => {
       t.category=prev;
-      if(prevRule){ Object.assign(S.rules.find(r=>r.id===prevRule.id)||{},prevRule); } else S.rules=S.rules.filter(r=>r.pattern!==pattern);
-      recomputeAnomalies(); render();
+      if(prevRule) Object.assign(rule,prevRule); else S.rules=S.rules.filter(r=>r!==rule);
+      recomputeAnomalies();
+    };
+    const saved = await persist('the category', async()=>{
+      await DB.setCategory([t.id],cat);
+      await (prevRule ? DB.updateRule(rule) : DB.insertRule(rule));
+    }, restore);
+    if(!saved) return;
+    toast(`Category updated — will apply to future ${t.merchant} transactions.`,{label:'Undo',run:async()=>{
+      const now={cat:t.category, rule:{...rule}};
+      restore(); render();
+      await persist('the undo', async()=>{
+        await DB.setCategory([t.id],prev);
+        await (prevRule ? DB.updateRule(prevRule) : DB.deleteRule(rule.id));
+      }, ()=>{ t.category=now.cat; if(prevRule) Object.assign(rule,now.rule); else S.rules.unshift(rule); recomputeAnomalies(); });
     }});
   });
 }
@@ -1135,10 +1359,14 @@ function renderAnoms(){
     : `<div class="card empty"><strong style="color:var(--ink)">Nothing to review</strong><br>No payments in this statement stand out from your usual spending.</div>`;
 }
 function bindAnoms(){
-  $('anom-list').addEventListener('click',e=>{
+  $('anom-list').addEventListener('click',async e=>{
     const ok=e.target.closest('[data-ok]'), v=e.target.closest('[data-view]');
     if(ok){ const id=ok.dataset.ok, t=S.tx.find(x=>x.id===id); S.dismissed.add(id); renderShell(); renderAnoms();
-      toast(`${t.merchant} marked as expected`,{label:'Undo',run:()=>{ S.dismissed.delete(id); renderShell(); if(S.view==='anomalies') renderAnoms(); }}); }
+      if(!await persist('the review', ()=>DB.dismiss(id), ()=>S.dismissed.delete(id))) return;
+      toast(`${t.merchant} marked as expected`,{label:'Undo',run:async()=>{
+        S.dismissed.delete(id); render();
+        await persist('the undo', ()=>DB.undismiss(id), ()=>S.dismissed.add(id));
+      }}); }
     if(v){ const t=S.tx.find(x=>x.id===v.dataset.view); S.tf.month=mk(t.date); S.tf.cats=new Set([t.category]); S.tf.min=''; S.tf.max=''; S.tf.sort={key:'amount',dir:'asc'}; S.tf.page=1; go('transactions'); }
   });
 }
@@ -1150,7 +1378,7 @@ function renderRules(){
     <td><span class="pattern">${esc(r.pattern)}</span></td>
     <td class="arrow" aria-hidden="true">→</td>
     <td><span class="cat-pill"><span class="dot" style="background:var(${CAT_TOKEN(r.category)})"></span>${r.category}</span></td>
-    <td><div class="by"><span>${esc(r.createdBy)}</span><small>${fmtDate(r.created)}</small></div></td>
+    <td><div class="by"><span>${esc(BY[r.by]||r.by)}</span><small>${fmtDate(r.created)}</small></div></td>
     <td class="t-right"><button type="button" class="icon-btn" data-del="${r.id}" aria-label="Delete rule ${esc(r.pattern)}" title="Delete rule"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg></button></td></tr>`).join('')
     : `<tr><td colspan="5" class="empty">No rules yet. Add one with the form, or change a category in the Transactions table.</td></tr>`;
   const sel=$('rule-cat'); if(!sel.options.length) sel.innerHTML = CATS.map(c=>`<option>${c}</option>`).join('');
@@ -1164,33 +1392,190 @@ function updateRuleMatch(){
 }
 function bindRules(){
   $('rule-pattern').addEventListener('input',()=>{ $('rule-err').textContent=''; updateRuleMatch(); });
-  $('rule-form').addEventListener('submit',e=>{
+  $('rule-form').addEventListener('submit',async e=>{
     e.preventDefault();
-    const p=$('rule-pattern').value.trim(), c=$('rule-cat').value;
+    const p=$('rule-pattern').value.trim().replace(/\s+/g,' '), c=$('rule-cat').value, P=p.toUpperCase();
     if(p.length<2){ $('rule-err').textContent='Enter a pattern of at least 2 characters, such as part of the merchant name.'; $('rule-pattern').focus(); return; }
-    if(S.rules.some(r=>r.pattern.toUpperCase()===p.toUpperCase())){ $('rule-err').textContent=`A rule for "${p.toUpperCase()}" already exists. Delete it first to change its category.`; return; }
-    S.rules.unshift({id:nid('r'),pattern:p.toUpperCase(),category:c,createdBy:'You',created:new Date()});
-    let changed=0;
-    if($('rule-apply').checked){ S.tx.forEach(t=>{ const r=matchRule(t.description,t.merchant); if(r && r.pattern===p.toUpperCase() && t.category!==c){ t.category=c; changed++; } }); recomputeAnomalies(); }
+    if(p.length>100){ $('rule-err').textContent='Keep the pattern under 100 characters. A short part of the merchant name works best.'; $('rule-pattern').focus(); return; }
+    if(S.rules.some(r=>r.pattern.toUpperCase()===P)){ $('rule-err').textContent=`A rule for "${P}" already exists. Delete it first to change its category.`; return; }
+    const rule={id:newId(),pattern:P,category:c,by:'user',created:new Date()};
+    S.rules.unshift(rule);
+    const changed=[];
+    if($('rule-apply').checked){ S.tx.forEach(t=>{ const r=matchRule(t.description,t.merchant); if(r===rule && t.category!==c){ changed.push({t,prev:t.category}); t.category=c; } }); recomputeAnomalies(); }
     $('rule-pattern').value=''; renderShell(); renderRules();
-    toast(`Rule added: ${p.toUpperCase()} → ${c}${changed?` · ${changed} transactions recategorised`:''}`);
+    const ok = await persist('the rule', async()=>{
+      await DB.insertRule(rule);
+      for(let i=0;i<changed.length;i+=200) await DB.setCategory(changed.slice(i,i+200).map(x=>x.t.id),c);
+    }, ()=>{ S.rules=S.rules.filter(r=>r!==rule); changed.forEach(x=>x.t.category=x.prev); recomputeAnomalies(); $('rule-pattern').value=p; });
+    if(ok) toast(`Rule added: ${P} → ${c}${changed.length?` · ${changed.length} transactions recategorised`:''}`);
   });
-  $('rules-body').addEventListener('click',e=>{
+  $('rules-body').addEventListener('click',async e=>{
     const b=e.target.closest('[data-del]'); if(!b) return;
     const i=S.rules.findIndex(r=>r.id===b.dataset.del); if(i<0) return;
     const [r]=S.rules.splice(i,1); renderRules();
-    toast(`Rule ${r.pattern} deleted`,{label:'Undo',run:()=>{ S.rules.splice(i,0,r); if(S.view==='rules') renderRules(); }});
+    if(!await persist('the change', ()=>DB.deleteRule(r.id), ()=>S.rules.splice(i,0,r))) return;
+    toast(`Rule ${r.pattern} deleted`,{label:'Undo',run:async()=>{
+      S.rules.splice(Math.min(i,S.rules.length),0,r); if(S.view==='rules') renderRules();
+      await persist('the undo', ()=>DB.insertRule(r), ()=>{ S.rules=S.rules.filter(x=>x!==r); });
+    }});
+  });
+}
+
+/* ============ auth & cloud sync ============ */
+// An email confirmation link lands here with tokens in the hash; leave them for supabase-js to read.
+let authRedirect = /access_token=|refresh_token=|error_description=/.test(location.hash);
+let loadedFor = null, authMode = 'signin';
+
+async function initBackend(){
+  if(!window.supabase || location.protocol==='file:') return;
+  let cfg;
+  try{ const r=await fetch('/api/config',{cache:'no-store'}); if(!r.ok) return; cfg=await r.json(); }catch(e){ return; }
+  if(cfg && cfg.error){ toast(cfg.error,null,'error'); return; }
+  if(!cfg || !cfg.supabaseUrl || !cfg.supabaseAnonKey) return;
+  try{ sb = supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:true}}); }
+  catch(e){ toast(`The Supabase settings aren't valid: ${e.message}`,null,'error'); return; }
+  S.backend = true; renderShell(); if(S.view==='upload') renderUpload();
+  if(authRedirect){
+    const hp = new URLSearchParams(location.hash.slice(1));
+    if(hp.get('error_description')) toast(`Sign-in link didn't work: ${hp.get('error_description')}. Request a new one by signing in again.`,null,'error');
+  }
+  // Supabase recommends not awaiting other Supabase calls inside this callback, so defer the work.
+  sb.auth.onAuthStateChange((event, session)=>{ setTimeout(()=>onAuth(session), 0); });
+}
+async function onAuth(session){
+  if(authRedirect){ authRedirect=false; try{ history.replaceState(null,'',location.pathname+'#'+S.view); }catch(e){} }
+  const user = (session && session.user) || null;
+  if(user && loadedFor!==user.id){ S.user=user; loadedFor=user.id; await enterCloud(); }
+  else if(!user && loadedFor){ loadedFor=null; S.user=null; leaveCloud(); }
+  else { S.user=user; renderShell(); }
+}
+async function enterCloud(){
+  closeAuth();
+  busy(+1);
+  try{
+    await q(sb.rpc(RPC.init));
+    const [rules, stmts] = await Promise.all([DB.loadRules(), DB.loadStatements()]);
+    S.mode='cloud'; S.rules=rules; S.statements=stmts; S.up={stage:'idle'};
+    if(stmts.length) await openStatement(stmts[0].id);
+    else setTransactions([], {id:null, name:'', sample:false});
+    render();
+    toast(stmts.length ? `Signed in. Opened ${stmts[0].name}.` : 'Signed in. Import a statement to get started.');
+  }catch(e){
+    S.mode='demo'; render();
+    toast(`You're signed in, but your data couldn't be loaded. ${friendlyError(e)}`,null,'error');
+  }finally{ busy(-1); }
+}
+function leaveCloud(){
+  S.mode='demo'; S.statements=[]; S.rules=demoRules(); S.up={stage:'idle'};
+  setTransactions(genSample(), {id:null, name:SAMPLE_NAME, sample:true});
+  render();
+  toast('Signed out. Showing sample data.');
+}
+async function openStatement(id){
+  const st=S.statements.find(s=>s.id===id); if(!st) return;
+  busy(+1);
+  try{
+    const [tx, reviewed] = await Promise.all([DB.loadTransactions(id), DB.loadReviews()]);
+    setTransactions(tx, {id, name:st.name, sample:false}, reviewed);
+  }catch(e){ toast(`Couldn't open ${st.name}. ${friendlyError(e)}`,null,'error'); }
+  finally{ busy(-1); }
+}
+async function deleteStatement(id){
+  const st=S.statements.find(s=>s.id===id); if(!st) return;
+  busy(+1);
+  try{ await DB.deleteStatement(id); }
+  catch(e){ toast(`Couldn't delete ${st.name}. ${friendlyError(e)}`,null,'error'); return; }
+  finally{ busy(-1); }
+  S.statements=S.statements.filter(s=>s.id!==id);
+  if(S.statement.id===id){
+    if(S.statements.length) await openStatement(S.statements[0].id);
+    else setTransactions([], {id:null, name:'', sample:false});
+  }
+  render();
+  toast(`Deleted ${st.name} and its ${st.rows.toLocaleString('en-IN')} transactions.`);
+}
+
+function paintAuth(){
+  const up = authMode==='signup';
+  $('auth-title').textContent = up ? 'Create your account' : 'Sign in';
+  $('auth-sub').textContent = up ? 'Your statements, category edits and rules are saved to this account and visible only to you.' : 'Sign in to save statements, category edits and rules to your account.';
+  $('auth-submit').textContent = up ? 'Create account' : 'Sign in';
+  $('auth-switch-text').textContent = up ? 'Already have an account?' : 'New here?';
+  $('auth-switch').textContent = up ? 'Sign in' : 'Create an account';
+  $('auth-password').setAttribute('autocomplete', up ? 'new-password' : 'current-password');
+  $('auth-err').textContent=''; $('auth-ok').hidden=true;
+}
+function openAuth(mode){
+  if(!sb) return;
+  authMode = mode||'signin'; paintAuth(); $('auth-modal').hidden=false;
+  setTimeout(()=>$('auth-email').focus(),0);
+}
+function closeAuth(){ $('auth-modal').hidden=true; $('auth-password').value=''; }
+function authMessage(err){
+  const m=(err && err.message)||'';
+  if(/invalid login credentials/i.test(m)) return "That email and password don't match an account. Check them, or create an account.";
+  if(/email not confirmed/i.test(m)) return 'Confirm your email first. Open the link we sent you, then sign in.';
+  if(/already registered|already exists/i.test(m)) return 'An account with this email already exists. Sign in instead.';
+  if(/rate limit|too many/i.test(m)) return 'Too many attempts. Wait a minute and try again.';
+  return friendlyError(err);
+}
+function bindAuth(){
+  document.addEventListener('click',e=>{ if(e.target.closest('[data-signin]')) openAuth('signin'); });
+  $('acct-signin').addEventListener('click',()=>openAuth('signin'));
+  $('auth-switch').addEventListener('click',()=>{ authMode = authMode==='signup'?'signin':'signup'; paintAuth(); $('auth-email').focus(); });
+  $('auth-modal').addEventListener('click',e=>{ if(e.target.closest('[data-close]')) closeAuth(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !$('auth-modal').hidden) closeAuth(); });
+  $('auth-form').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const email=$('auth-email').value.trim(), password=$('auth-password').value, up=authMode==='signup';
+    $('auth-err').textContent=''; $('auth-ok').hidden=true;
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ $('auth-err').textContent='Enter a valid email address, like name@example.com.'; $('auth-email').focus(); return; }
+    if(password.length<8){ $('auth-err').textContent='Passwords need at least 8 characters.'; $('auth-password').focus(); return; }
+    const btn=$('auth-submit'); btn.disabled=true; btn.textContent = up ? 'Creating account…' : 'Signing in…';
+    try{
+      if(up){
+        const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});
+        if(error) throw error;
+        if(data.user && Array.isArray(data.user.identities) && data.user.identities.length===0) throw new Error('already registered');
+        if(!data.session){ $('auth-ok').textContent=`Check your inbox. We sent a confirmation link to ${email}. Open it, and you'll come back here signed in.`; $('auth-ok').hidden=false; $('auth-password').value=''; }
+      }else{
+        const {error}=await sb.auth.signInWithPassword({email,password});
+        if(error) throw error;
+      }
+    }catch(err){ $('auth-err').textContent=authMessage(err); }
+    finally{ btn.disabled=false; btn.textContent = up ? 'Create account' : 'Sign in'; }
+  });
+  const pop=$('acct-pop'), abtn=$('acct-btn');
+  const setOpen=o=>{ pop.hidden=!o; abtn.setAttribute('aria-expanded',String(o)); };
+  abtn.addEventListener('click',()=>setOpen(pop.hidden));
+  document.addEventListener('click',e=>{ if(!pop.hidden && !e.target.closest('#acct')) setOpen(false); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !pop.hidden){ setOpen(false); abtn.focus(); } });
+  $('acct-signout').addEventListener('click',async()=>{
+    setOpen(false);
+    const {error}=await sb.auth.signOut();
+    if(error) toast(`Couldn't sign out. ${friendlyError(error)}`,null,'error');
+  });
+  // statement list on the Upload screen
+  $('upload-body').addEventListener('click',async e=>{
+    const o=e.target.closest('[data-open-stmt]'), d=e.target.closest('[data-del-stmt]');
+    if(o){ await openStatement(o.dataset.openStmt); S.up={stage:'idle'}; go('dashboard'); }
+    if(d){
+      if(d.dataset.armed){ d.disabled=true; await deleteStatement(d.dataset.delStmt); return; }
+      d.dataset.armed='1'; d.textContent='Delete permanently?'; d.classList.remove('ghost');
+      setTimeout(()=>{ if(d.isConnected){ delete d.dataset.armed; d.textContent='Delete'; d.classList.add('ghost'); } },4000);
+    }
   });
 }
 
 /* ============ boot ============ */
 function boot(){
-  buildNav(); bindDashboard(); bindTx(); bindAnoms(); bindRules();
+  buildNav(); bindDashboard(); bindTx(); bindAnoms(); bindRules(); bindAuth();
   $('file-input').addEventListener('change',e=>{ handleFile(e.target.files[0]); e.target.value=''; });
   if(window.Chart){ Chart.defaults.font.family='Geist, system-ui, sans-serif'; }
-  setTransactions(genSample(),{name:'sample-statement-jan-sep-2026.csv',sample:true});
-  const h=(location.hash||'').slice(1);
+  setTransactions(genSample(),{id:null, name:SAMPLE_NAME, sample:true});
+  const h=authRedirect ? '' : (location.hash||'').slice(1);
   go(NAV.some(n=>n[0]===h)?h:'dashboard');
+  initBackend();
   const rerender=()=>{ if(S.view==='dashboard') renderDashboard(); };
   try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',rerender); }catch(e){}
   new MutationObserver(rerender).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
