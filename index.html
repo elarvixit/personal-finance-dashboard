@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Schibsted+Grotesk:wght@500;600;700&display=swap">
 <style>
 /* Layout: fixed left rail + sticky statement bar; content is a 12-col card grid that collapses to one column with a bottom tab bar on phones. */
-:root{
+:root{ color-scheme:light;
   --bg:#F2F5F4; --surface:#FFFFFF; --surface-2:#F7F9F8; --line:#E1E7E5; --line-2:#D3DBD8;
   --ink:#13201C; --ink-2:#48564F; --ink-3:#7A8782;
   --accent:#0D7660; --accent-ink:#FFFFFF; --accent-soft:#E2F1EC; --accent-line:#BFE0D5;
@@ -19,6 +19,7 @@
   --danger:#A6433A;
   --shadow:0 1px 2px rgba(19,32,28,.04),0 6px 20px -6px rgba(19,32,28,.08);
   --shadow-lg:0 12px 40px -8px rgba(19,32,28,.22);
+  --shadow-hover:0 2px 4px rgba(19,32,28,.05),0 16px 34px -12px rgba(19,32,28,.2);
   --c-food:#0D7660; --c-transport:#3A6DB5; --c-shopping:#C57A4C; --c-bills:#7659B3; --c-rent:#2E4756;
   --c-salary:#1C8656; --c-transfers:#8C96A0; --c-entertainment:#BD4D78; --c-health:#2F9AAE; --c-other:#AE9A2F;
   --font-display:"Schibsted Grotesk","Segoe UI",system-ui,sans-serif;
@@ -27,27 +28,29 @@
   --r-lg:16px; --r-md:11px; --r-sm:8px;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0D1311; --surface:#141C1A; --surface-2:#18221F; --line:#24302C; --line-2:#2F3D38;
-  --ink:#E6EEEB; --ink-2:#A8B6B1; --ink-3:#73827C;
-  --accent:#3CC5A4; --accent-ink:#052019; --accent-soft:#12302A; --accent-line:#1E4A40;
+  --bg:#0A0B0B; --surface:#131515; --surface-2:#1A1D1C; --line:#252928; --line-2:#323736;
+  --ink:#EDEFEE; --ink-2:#A9B0AD; --ink-3:#767E7B;
+  --accent:#3CC5A4; --accent-ink:#052019; --accent-soft:#0F261F; --accent-line:#1B4236;
   --exp:#E29A6B; --pos:#55D19A; --pos-soft:#143024;
   --warn:#E9BA6C; --warn-soft:#241D12; --warn-line:#43361D; --warn-dot:#E0A94A;
   --danger:#E7877D;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -8px rgba(0,0,0,.45);
   --shadow-lg:0 16px 48px -8px rgba(0,0,0,.6);
+  --shadow-hover:0 2px 4px rgba(0,0,0,.45),0 18px 38px -12px rgba(0,0,0,.8);
   --c-food:#3CC5A4; --c-transport:#6E9BE0; --c-shopping:#E29A6B; --c-bills:#A68BE3; --c-rent:#7F9CAD;
   --c-salary:#55D19A; --c-transfers:#99A3AD; --c-entertainment:#E37FA6; --c-health:#58C3D6; --c-other:#D4C25A;
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
-  --bg:#0D1311; --surface:#141C1A; --surface-2:#18221F; --line:#24302C; --line-2:#2F3D38;
-  --ink:#E6EEEB; --ink-2:#A8B6B1; --ink-3:#73827C;
-  --accent:#3CC5A4; --accent-ink:#052019; --accent-soft:#12302A; --accent-line:#1E4A40;
+  --bg:#0A0B0B; --surface:#131515; --surface-2:#1A1D1C; --line:#252928; --line-2:#323736;
+  --ink:#EDEFEE; --ink-2:#A9B0AD; --ink-3:#767E7B;
+  --accent:#3CC5A4; --accent-ink:#052019; --accent-soft:#0F261F; --accent-line:#1B4236;
   --exp:#E29A6B; --pos:#55D19A; --pos-soft:#143024;
   --warn:#E9BA6C; --warn-soft:#241D12; --warn-line:#43361D; --warn-dot:#E0A94A;
   --danger:#E7877D;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -8px rgba(0,0,0,.45);
   --shadow-lg:0 16px 48px -8px rgba(0,0,0,.6);
+  --shadow-hover:0 2px 4px rgba(0,0,0,.45),0 18px 38px -12px rgba(0,0,0,.8);
   --c-food:#3CC5A4; --c-transport:#6E9BE0; --c-shopping:#E29A6B; --c-bills:#A68BE3; --c-rent:#7F9CAD;
   --c-salary:#55D19A; --c-transfers:#99A3AD; --c-entertainment:#E37FA6; --c-health:#58C3D6; --c-other:#D4C25A;
   color-scheme:dark;
@@ -332,6 +335,60 @@ th[aria-sort]{color:var(--ink)}
 .chip.rec{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
 .rec-income{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--ink-3)}
 
+/* ---------- theme switch ---------- */
+body{transition:background-color .25s ease,color .25s ease}
+.theme-btn{width:36px;height:36px;flex:none;display:grid;place-items:center;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);transition:color .15s,border-color .15s,background .15s,transform .15s}
+.theme-btn svg{transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+
+/* ---------- hover effects (mouse and trackpad only) ---------- */
+@media (hover:hover) and (pointer:fine){
+  .card{transition:box-shadow .2s ease,transform .2s ease,border-color .2s ease,background-color .25s ease}
+  .grid > .card:hover,.kpi:hover,.anom:hover,.formats .card:hover,.b-summary .card:hover,.anom-summary .card:hover,.stmts:hover,.samples:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:var(--line-2)}
+  .kpi.lead:hover{border-color:var(--accent);box-shadow:0 18px 36px -14px var(--accent)}
+  .anom:hover{border-color:var(--warn-dot)}
+
+  .btn{transition:background .15s,border-color .15s,box-shadow .15s,transform .15s,color .15s}
+  .btn:not(:disabled):hover{transform:translateY(-1px);border-color:var(--ink-3);box-shadow:0 6px 14px -8px rgba(0,0,0,.35)}
+  .btn.primary:not(:disabled):hover{border-color:var(--accent);box-shadow:0 8px 18px -8px var(--accent)}
+  .btn.ghost:not(:disabled):hover{box-shadow:none;border-color:transparent}
+  .btn:not(:disabled):active{transform:translateY(0);box-shadow:none}
+  .theme-btn:hover{color:var(--ink);border-color:var(--ink-3);transform:translateY(-1px)}
+  .theme-btn:hover svg{transform:rotate(-20deg) scale(1.08)}
+  .acct-btn{transition:border-color .15s,transform .15s}
+  .acct-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .linkish{transition:opacity .15s}
+
+  .nav a svg{transition:transform .18s ease}
+  .nav a:hover svg{transform:translateX(2px)}
+  .bottomnav a{transition:color .15s,background .15s}
+  .bottomnav a:hover{color:var(--ink)}
+  .seg button{transition:background .15s,color .15s}
+  .seg button[aria-pressed="false"]:hover{color:var(--ink);background:color-mix(in srgb,var(--surface) 60%,transparent)}
+  .pages button{transition:border-color .15s,color .15s,transform .15s}
+  .pages button:not(:disabled):not([aria-current]):hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+  .tx-table th button{transition:color .15s}
+  .tx-table th button:hover{color:var(--ink)}
+  .tx-table th button:hover .sort-ic{opacity:.8}
+
+  /* list rows: soft highlight that bleeds slightly past the text */
+  .merchants li,.rec-list li,.stmt-list li,.sample-list li,.pie-legend li,.dash-budgets li{transition:background .15s;border-radius:8px}
+  .merchants li,.rec-list li,.stmt-list li,.sample-list li{margin-inline:-10px;padding-inline:10px}
+  .pie-legend li,.dash-budgets li{margin-inline:-8px;padding:3px 8px}
+  .merchants li:hover,.rec-list li:hover,.stmt-list li:hover,.sample-list li:hover,.pie-legend li:hover,.dash-budgets li:hover{background:var(--surface-2)}
+  .pie-legend li{cursor:default}
+  .merchants li:hover .m-bar b{filter:brightness(1.15)}
+  tbody tr td{transition:background .12s}
+
+  .drop{transition:border-color .2s,background .2s}
+  .drop:hover{border-color:var(--accent-line)}
+  .drop-icon{transition:transform .25s ease}
+  .drop:hover .drop-icon{transform:translateY(-3px)}
+  .b-bar b{transition:width .4s ease,filter .15s}
+  .ms-btn{transition:border-color .15s}
+  .ms-btn:hover,.input:hover,.sel select:hover{border-color:var(--ink-3)}
+  .icon-btn{transition:background .15s,color .15s,border-color .15s}
+}
+
 /* ---------- account, auth, loading ---------- */
 .acct{position:relative;flex:none}
 .acct-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-2);background:var(--surface);padding:2px;display:grid;place-items:center}
@@ -457,6 +514,9 @@ th[aria-sort]{color:var(--ink)}
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
         <span class="up-label">New statement</span>
       </a>
+      <button type="button" class="theme-btn" id="theme-btn" aria-label="Theme: follow system. Switch to light" title="Theme: follow system">
+        <svg id="theme-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+      </button>
       <div class="acct" id="acct" hidden>
         <button type="button" class="btn sm primary" id="acct-signin">Sign in</button>
         <button type="button" class="acct-btn" id="acct-btn" aria-haspopup="true" aria-expanded="false" hidden><span class="avatar" id="acct-avatar" aria-hidden="true">?</span><span class="sr">Account menu</span></button>
@@ -1390,7 +1450,7 @@ function renderDashboard(){
   const cats = CATS.filter(c=>catSum[c]).sort((a,b)=>catSum[b]-catSum[a]);
   const colors = cats.map(c=>tok(CAT_TOKEN(c)));
   $('pie-total').textContent = fmtCompact(exp);
-  $('pie-legend').innerHTML = cats.length ? cats.map((c,i)=>`<li><span class="dot" style="background:${colors[i]}"></span><span class="nm">${c}</span><span class="num" style="font-size:12.5px">${fmt(catSum[c])}</span><span class="pc num">${(catSum[c]/exp*100).toFixed(0)}%</span></li>`).join('') : '<li class="muted">No spend in this range</li>';
+  $('pie-legend').innerHTML = cats.length ? cats.map((c,i)=>`<li data-i="${i}"><span class="dot" style="background:${colors[i]}"></span><span class="nm">${c}</span><span class="num" style="font-size:12.5px">${fmt(catSum[c])}</span><span class="pc num">${(catSum[c]/exp*100).toFixed(0)}%</span></li>`).join('') : '<li class="muted">No spend in this range</li>';
   mkChart('ch-pie',{type:'doughnut',data:{labels:cats,datasets:[{data:cats.map(c=>catSum[c]),backgroundColor:colors,borderColor:tok('--surface'),borderWidth:2,hoverOffset:6}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'70%',animation:reduceMotion()?false:{duration:500},plugins:{legend:{display:false},
       tooltip:{backgroundColor:tok('--ink'),titleColor:tok('--surface'),bodyColor:tok('--surface'),padding:10,cornerRadius:8,bodyFont:{family:'Geist Mono, monospace'},
@@ -1879,9 +1939,45 @@ function bindAuth(){
   });
 }
 
+/* ============ theme ============ */
+const THEME_KEY='ledgerline-theme', THEMES=['system','light','dark'];
+const THEME_ICONS = {
+  system:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+  light:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  dark:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'
+};
+const THEME_NAMES = {system:'follow system', light:'light', dark:'dark'};
+function applyTheme(t, announce){
+  if(!THEMES.includes(t)) t='system';
+  const root=document.documentElement;
+  if(t==='system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme',t);
+  const next=THEMES[(THEMES.indexOf(t)+1)%THEMES.length];
+  $('theme-icon').innerHTML=THEME_ICONS[t];
+  $('theme-btn').setAttribute('aria-label',`Theme: ${THEME_NAMES[t]}. Switch to ${THEME_NAMES[next]}`);
+  $('theme-btn').title=`Theme: ${THEME_NAMES[t]} (click for ${THEME_NAMES[next]})`;
+  $('theme-btn').dataset.theme=t;
+  try{ localStorage.setItem(THEME_KEY,t); }catch(e){}
+  if(announce) toast(t==='system' ? 'Theme follows your device setting' : `${t==='dark'?'Dark':'Light'} theme on`);
+}
+function initTheme(){
+  let saved='system'; try{ saved=localStorage.getItem(THEME_KEY)||'system'; }catch(e){}
+  applyTheme(saved,false);
+  $('theme-btn').addEventListener('click',()=>{ const cur=$('theme-btn').dataset.theme||'system'; applyTheme(THEMES[(THEMES.indexOf(cur)+1)%THEMES.length],true); });
+}
+// Hovering a category in the legend highlights its slice in the doughnut.
+function bindLegendHover(){
+  const legend=$('pie-legend');
+  const set=idx=>{ const ch=charts['ch-pie']; if(!ch) return;
+    const els = idx==null ? [] : [{datasetIndex:0,index:idx}];
+    ch.setActiveElements(els); if(ch.tooltip) ch.tooltip.setActiveElements(els,{x:0,y:0}); ch.update(); };
+  legend.addEventListener('mouseover',e=>{ const li=e.target.closest('li[data-i]'); if(li) set(+li.dataset.i); });
+  legend.addEventListener('mouseleave',()=>set(null));
+}
+
 /* ============ boot ============ */
 function boot(){
-  buildNav(); bindDashboard(); bindTx(); bindAnoms(); bindBudgets(); bindRules(); bindAuth();
+  initTheme();
+  buildNav(); bindDashboard(); bindTx(); bindAnoms(); bindBudgets(); bindRules(); bindAuth(); bindLegendHover();
   $('file-input').addEventListener('change',e=>{ handleFile(e.target.files[0]); e.target.value=''; });
   if(window.Chart){ Chart.defaults.font.family='Geist, system-ui, sans-serif'; }
   setTransactions(genSample(),{id:null, name:SAMPLE_NAME, sample:true});
